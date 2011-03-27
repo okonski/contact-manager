@@ -15,11 +15,18 @@ ActiveRecord::Base.establish_connection\
 
 ActiveRecord::Migrator.migrate('migrations', nil)
 
-require 'lib/builder_widgetable'
-require 'widgets/index'
-
-Dir["models/*.rb"].collect {|n| File.basename n, ".*" }.each do |file|
-  require "models/#{file}"
+module ContactManager  
+  autoload :BuilderWidgetable, "lib/builder_widgetable"
+  
+  Dir["models/*.rb"].collect {|n| File.basename n, ".*" }.each do |file|
+    autoload file.camelize.to_sym, "models/#{file}"
+  end
+  
+  module Widgets    
+    Dir["widgets/*.rb"].collect {|n| File.basename n, ".*" }.each do |file|
+      autoload file.camelize.to_sym, "widgets/#{file}"
+    end
+  end
 end
 
 #User.create! :name => "Sheldon Cooper", :age => 25

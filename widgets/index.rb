@@ -1,7 +1,7 @@
 module ContactManager
   module Widgets
     class Index
-      include BuilderWidgetable
+      include ::ContactManager::BuilderWidgetable
       
       def initialize
         @window = ui.get_object "window1"
@@ -49,7 +49,7 @@ module ContactManager
       protected
         def showContacts
           @contactStore.clear
-          ::User.all.each do |user|
+          User.all.each do |user|
             iter = @contactStore.append
             iter[0] = user.id
             iter[1] = user.name
