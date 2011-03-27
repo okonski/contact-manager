@@ -1,19 +1,23 @@
 #!/usr/bin/env ruby
 
+$:.unshift './'
+
 require 'bundler'
 Bundler.setup
 
-puts "Initialized."
+require 'active_support/all'
+require 'active_record'
+require 'gtk2'
 
-require 'Qt4'
+ActiveRecord::Base.establish_connection\
+  :adapter => 'sqlite3', 
+  :database => 'development.db'
 
-app = Qt::Application.new(ARGV)
+ActiveRecord::Migrator.migrate('migrations', nil)
 
-quit = Qt::PushButton.new('Quit')
-quit.resize(75, 30)
-quit.setFont(Qt::Font.new('Times', 18, Qt::Font::Bold))
+require 'widgets/hello'
 
-Qt::Object.connect(quit, SIGNAL('clicked()'), app, SLOT('quit()'))
+hello = HelloWidget.new
+hello.show
 
-quit.show()
-app.exec()
+Gtk.main
