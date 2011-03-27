@@ -15,6 +15,7 @@ ActiveRecord::Base.establish_connection\
 
 ActiveRecord::Migrator.migrate('migrations', nil)
 
+require 'lib/builder_widgetable'
 require 'widgets/index'
 
 Dir["models/*.rb"].collect {|n| File.basename n, ".*" }.each do |file|

@@ -1,17 +1,12 @@
 module ContactManager
   module Widgets
     class Index
-      attr_accessor :ui, :window
+      include BuilderWidgetable
       
       def initialize
-        @ui = Gtk::Builder.new
-        @ui.add_from_file File.expand_path("ui/index.ui")
-        
-        @window = @ui.get_object "window1"
-        
-        super
+        @window = ui.get_object "window1"
 
-        @contactView = @ui.get_object "ContactView"
+        @contactView = ui.get_object "ContactView"
         @contactView.headers_visible = true
         @contactView.headers_clickable = true
         @contactView.selection.mode = Gtk::SELECTION_BROWSE
@@ -27,18 +22,18 @@ module ContactManager
           showPopup(view.selection.selected)
         end
         
-        @contactStore = @ui.get_object "ContactStore"
+        @contactStore = ui.get_object "ContactStore"
         @contactView.model = @contactStore
         
-        @showButton = @ui.get_object "ShowButton"
+        @showButton = ui.get_object "ShowButton"
         @showButton.signal_connect "clicked" do
           selected = @contactView.selection.selected
           showPopup selected
         end
         
-        @quitButton = @ui.get_object "QuitButton"
+        @quitButton = ui.get_object "QuitButton"
         @quitButton.signal_connect "clicked" do
-          destroy
+          @window.destroy
         end
         
         @window.signal_connect "destroy" do
