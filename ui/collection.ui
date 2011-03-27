@@ -3,24 +3,105 @@
   <requires lib="gtk+" version="2.16"/>
   <!-- interface-naming-policy project-wide -->
   <object class="GtkWindow" id="window1">
+    <property name="height_request">250</property>
     <property name="title" translatable="yes">Index</property>
     <child>
       <object class="GtkVBox" id="vbox1">
+        <property name="height_request">300</property>
         <property name="visible">True</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkTreeView" id="ContactView">
+          <object class="GtkToolbar" id="ToolBox">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="model">ContactStore</property>
-            <property name="level_indentation">1</property>
+            <property name="toolbar_style">both</property>
+            <child>
+              <object class="GtkToolButton" id="CreateAction">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">New</property>
+                <property name="use_underline">True</property>
+                <property name="stock_id">gtk-new</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkToolButton" id="ShowAction">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Show</property>
+                <property name="use_underline">True</property>
+                <property name="stock_id">gtk-info</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkToolButton" id="EditAction">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Edit</property>
+                <property name="use_underline">True</property>
+                <property name="stock_id">gtk-edit</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkToolButton" id="DeleteAction">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Delete</property>
+                <property name="use_underline">True</property>
+                <property name="stock_id">gtk-delete</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkToolButton" id="RefreshAction">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Refresh</property>
+                <property name="use_underline">True</property>
+                <property name="stock_id">gtk-refresh</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
           </object>
           <packing>
+            <property name="expand">False</property>
             <property name="position">0</property>
           </packing>
         </child>
         <child>
-          <object class="GtkHBox" id="hbox1">
+          <object class="GtkScrolledWindow" id="scrolledwindow1">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="hscrollbar_policy">automatic</property>
+            <property name="vscrollbar_policy">automatic</property>
+            <child>
+              <object class="GtkTreeView" id="ContactView">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="model">ContactStore</property>
+                <property name="search_column">0</property>
+                <property name="level_indentation">1</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkHButtonBox" id="hbuttonbox1">
             <property name="visible">True</property>
             <child>
               <object class="GtkButton" id="CreateButton">
@@ -57,7 +138,8 @@
             </child>
           </object>
           <packing>
-            <property name="position">1</property>
+            <property name="expand">False</property>
+            <property name="position">2</property>
           </packing>
         </child>
       </object>

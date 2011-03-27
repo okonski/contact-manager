@@ -27,9 +27,26 @@ module Widgets
         @contactView.model = @contactStore
         
         @showButton = ui.get_object "ShowButton"
-        @showButton.signal_connect "clicked" do
-          selected = @contactView.selection.selected
-          show selected
+        @showAction = ui.get_object "ShowAction"
+        @editAction = ui.get_object "EditAction"
+        [@showButton, @showAction, @editAction].each do |e|
+          e.signal_connect "clicked" do
+            selected = @contactView.selection.selected
+            show selected
+          end
+        end
+        
+                       
+        @refreshAction = ui.get_object "RefreshAction"
+        @refreshAction.signal_connect "clicked" do
+          refresh
+        end
+        
+        @deleteAction = ui.get_object "DeleteAction"
+        @deleteAction.signal_connect "clicked" do
+          id = @contactView.selection.selected[0]
+          User.find(id).destroy
+          refresh
         end
         
         @quitButton = ui.get_object "QuitButton"
@@ -38,8 +55,11 @@ module Widgets
         end
         
         @createButton = ui.get_object "CreateButton"
-        @createButton.signal_connect "clicked" do
-          show -1
+        @newAction = ui.get_object "CreateAction"
+        [@createButton, @newAction].each do |e|
+          e.signal_connect "clicked" do
+            show -1
+          end
         end
         
         @window.signal_connect "destroy" do
