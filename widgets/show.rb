@@ -24,9 +24,17 @@ module ContactManager
           save
         end
         
+        @deleteButton = ui.get_object "DeleteButton"
+        @deleteButton.signal_connect "clicked" do
+          destroy
+        end
+        
         @window.show
       end
-
+      
+      def refresh_parent
+        @parent.refresh if @parent
+      end
 
       def refresh
         @idEntry.text = @contact.id.to_s
@@ -39,7 +47,13 @@ module ContactManager
         @contact.age = @ageEntry.text.to_i
         @contact.save
         refresh
-        @parent.refresh if @parent
+        refresh_parent
+      end
+      
+      def destroy
+        @window.destroy
+        @contact.destroy
+        refresh_parent
       end
     end
   end
