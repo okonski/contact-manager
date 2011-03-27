@@ -15,9 +15,15 @@ ActiveRecord::Base.establish_connection\
 
 ActiveRecord::Migrator.migrate('migrations', nil)
 
-require 'widgets/hello'
+require 'widgets/index'
 
-hello = HelloWidget.new
-hello.show
+Dir["models/*.rb"].collect {|n| File.basename n, ".*" }.each do |file|
+  require "models/#{file}"
+end
+
+#User.create! :name => "Sheldon Cooper", :age => 25
+
+index = ContactManager::Widgets::Index.new
+index.show
 
 Gtk.main
