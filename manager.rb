@@ -21,8 +21,10 @@ Dir["models/*.rb"].collect {|n| File.basename n, ".*" }.each do |file|
   require "models/#{file}"
 end
   
-Dir["widgets/*.rb"].collect {|n| File.basename n, ".*" }.each do |file|
-  require "widgets/#{file}"
+Dir["widgets/*"].each do |subdir|
+  Dir["#{subdir}/*.rb"].collect {|n| File.basename n, ".*" }.each do |file|
+    require "#{subdir}/#{file}"
+  end
 end
 
 #User.create! :name => "Sheldon Cooper", :age => 25
