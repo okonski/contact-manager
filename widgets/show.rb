@@ -5,7 +5,7 @@ module ContactManager
       attr_accessor :contact, :parent
       
       def initialize(contact_id, parent = nil)
-        @contact = User.find(contact_id)
+        @contact = User.find(contact_id) rescue User.new
         @parent = parent
         @window = ui.get_object "ShowContactWindow"
         
@@ -30,6 +30,10 @@ module ContactManager
         end
         
         @window.show
+      end
+      
+      def new?
+        @contact.new_record?
       end
       
       def refresh_parent

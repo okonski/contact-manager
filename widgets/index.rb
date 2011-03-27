@@ -36,6 +36,11 @@ module ContactManager
           @window.destroy
         end
         
+        @createButton = ui.get_object "CreateButton"
+        @createButton.signal_connect "clicked" do
+          show -1
+        end
+        
         @window.signal_connect "destroy" do
           Gtk.main_quit
         end

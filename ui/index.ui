@@ -23,6 +23,17 @@
           <object class="GtkHBox" id="hbox1">
             <property name="visible">True</property>
             <child>
+              <object class="GtkButton" id="CreateButton">
+                <property name="label" translatable="yes">Create</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+              </object>
+              <packing>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkButton" id="ShowButton">
                 <property name="label" translatable="yes">Show</property>
                 <property name="visible">True</property>
@@ -30,7 +41,7 @@
                 <property name="receives_default">True</property>
               </object>
               <packing>
-                <property name="position">0</property>
+                <property name="position">1</property>
               </packing>
             </child>
             <child>
@@ -41,7 +52,7 @@
                 <property name="receives_default">True</property>
               </object>
               <packing>
-                <property name="position">1</property>
+                <property name="position">2</property>
               </packing>
             </child>
           </object>
