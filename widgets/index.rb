@@ -1,6 +1,7 @@
 module ContactManager
-  module Widgets
-    class Index
+module Widgets
+  module Contacts
+    class Collection
       include ::ContactManager::BuilderWidgetable
       
       def initialize
@@ -66,4 +67,5 @@ module ContactManager
       end
     end
   end
+end
 end
