@@ -24,6 +24,6 @@ end
 #User.create! :name => "Sheldon Cooper", :age => 25
 
 index = ContactManager::Widgets::Index.new
-index.show
+index.window.show
 
 Gtk.main

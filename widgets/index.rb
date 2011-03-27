@@ -1,12 +1,17 @@
 module ContactManager
   module Widgets
-    class Index < Gtk::Window  
+    class Index
+      attr_accessor :ui, :window
+      
       def initialize
+        @ui = Gtk::Builder.new
+        @ui.add_from_file File.expand_path("ui/index.ui")
+        
+        @window = @ui.get_object "window1"
+        
         super
-        
-        @verticalLayout = Gtk::VBox.new
-        
-        @contactView = Gtk::TreeView.new
+
+        @contactView = @ui.get_object "ContactView"
         @contactView.headers_visible = true
         @contactView.headers_clickable = true
         @contactView.selection.mode = Gtk::SELECTION_BROWSE
@@ -22,38 +27,28 @@ module ContactManager
           showPopup(view.selection.selected)
         end
         
-        @contactStore = Gtk::ListStore.new Integer, String, Integer
+        @contactStore = @ui.get_object "ContactStore"
         @contactView.model = @contactStore
         
-        @verticalLayout.pack_start @contactView
-        
-        @showButton = Gtk::Button.new "Show"
+        @showButton = @ui.get_object "ShowButton"
         @showButton.signal_connect "clicked" do
           selected = @contactView.selection.selected
           showPopup selected
         end
         
-        @quitButton = Gtk::Button.new "Quit"
+        @quitButton = @ui.get_object "QuitButton"
         @quitButton.signal_connect "clicked" do
           destroy
         end
         
-        @buttonBox = Gtk::HButtonBox.new
-        
-        @buttonBox.pack_start @showButton
-        @buttonBox.pack_start @quitButton
-                
-        @verticalLayout.pack_start @buttonBox
-        
-        signal_connect "destroy" do
+        @window.signal_connect "destroy" do
           Gtk.main_quit
         end
         
         showContacts
         
-        set_title "Index"
-        add @verticalLayout
-        show_all
+        @window.set_title "Index"
+        @window.show_all
       end
       
       protected
@@ -68,7 +63,7 @@ module ContactManager
         end
         
         def showPopup selection
-          dialog = Gtk::MessageDialog.new(self, Gtk::Dialog::DESTROY_WITH_PARENT, Gtk::MessageDialog::INFO, Gtk::MessageDialog::BUTTONS_CLOSE, "You have selected #{selection[1]}.")
+          dialog = Gtk::MessageDialog.new(@window, Gtk::Dialog::DESTROY_WITH_PARENT, Gtk::MessageDialog::INFO, Gtk::MessageDialog::BUTTONS_CLOSE, "You have selected #{selection[1]}.")
           dialog.run
           dialog.destroy
         end
