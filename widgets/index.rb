@@ -19,7 +19,7 @@ module ContactManager
         @contactView.append_column col2
         @contactView.append_column col3
         @contactView.signal_connect "row-activated" do |view, path, column|
-          showPopup(view.selection.selected)
+          show view.selection.selected
         end
         
         @contactStore = ui.get_object "ContactStore"
@@ -28,7 +28,7 @@ module ContactManager
         @showButton = ui.get_object "ShowButton"
         @showButton.signal_connect "clicked" do
           selected = @contactView.selection.selected
-          showPopup selected
+          show selected
         end
         
         @quitButton = ui.get_object "QuitButton"
@@ -40,28 +40,25 @@ module ContactManager
           Gtk.main_quit
         end
         
-        showContacts
+        refresh
         
         @window.set_title "Index"
         @window.show_all
       end
       
-      protected
-        def showContacts
-          @contactStore.clear
-          User.all.each do |user|
-            iter = @contactStore.append
-            iter[0] = user.id
-            iter[1] = user.name
-            iter[2] = user.age
-          end          
-        end
-        
-        def showPopup selection
-          dialog = Gtk::MessageDialog.new(@window, Gtk::Dialog::DESTROY_WITH_PARENT, Gtk::MessageDialog::INFO, Gtk::MessageDialog::BUTTONS_CLOSE, "You have selected #{selection[1]}.")
-          dialog.run
-          dialog.destroy
-        end
+      def refresh
+        @contactStore.clear
+        User.all.each do |user|
+          iter = @contactStore.append
+          iter[0] = user.id
+          iter[1] = user.name
+          iter[2] = user.age
+        end          
+      end
+       
+      def show contact
+        Widgets::Show.new(contact[0], self)
+      end
     end
   end
 end
