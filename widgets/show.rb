@@ -1,6 +1,7 @@
 module ContactManager
-  module Widgets
-    class Show
+module Widgets
+  module Contacts
+    class Resource
       include BuilderWidgetable
       attr_accessor :contact, :parent
       
@@ -61,4 +62,5 @@ module ContactManager
       end
     end
   end
+end
 end

@@ -62,7 +62,7 @@ module ContactManager
       end
        
       def show contact
-        Widgets::Show.new(contact[0], self)
+        Widgets::Contacts::Resource.new(contact[0], self)
       end
     end
   end
